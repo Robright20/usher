@@ -14,6 +14,14 @@ As a result, you will have the `evaluation date` and the `logins of participants
 The criteria that we used to define are very subjectives, so be carefull if you try
 to use it in real life.
 
+- the moulinette grade is lower
+- the evaluated feedback on the evaluator
+- empty repository
+- forbidden function
+- norm error
+- author file
+- check the feedbacks comments(length, too short, generic or automatic. bad words)
+
 ## Latest Features
 
 [TODO]
