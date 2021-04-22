@@ -1,7 +1,7 @@
 # Usher
 
-Although the Google Dictionary said it's an "Archaic" noun which means, an assistant
-teacher, I adapt it to: an assistant for pedagogical purposes at 42.
+Although the Google Dictionary said it's an "Archaic" noun which means, *an assistant
+teacher*. I adapt it to *an assistant for pedagogical purposes at 42*.
 
 ## About
 
@@ -11,7 +11,7 @@ As a result, you will have the `evaluation date` and the `logins of participants
 
 ## Bad evaluations ?
 
-The criteria that we used to define are very subjectives, so be carefull if you try
+The criteria that we used to define are very subjective, so be carefull if you try
 to use it in real life.
 
 - the moulinette grade is lower
@@ -24,19 +24,33 @@ to use it in real life.
 
 ## Latest Features
 
-[TODO]
+Here are the latest stuff that the tool is able to do
+- Get my profiles data from the api
 
-## Building
+## Environment Setup
 
-[TODO]
-
-## Testing
-
-[TODO]
+**Requirements**
+- Node
+- npm
 
 ## Usage
 
-[TODO]
+1. Clone the repository
+```sh
+git clone https://github.com/Robright20/usher.git
+```
+2. Change the working directory to `usher` or whatever you named it
+```sh
+cd usher
+```
+3. Install dependecies
+```sh
+npm i
+```
+4. Run it !
+```sh
+npm start
+```
 
 ## Authors
 
