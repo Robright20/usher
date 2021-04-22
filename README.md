@@ -29,9 +29,14 @@ Here are the latest stuff that the tool is able to do
 
 ## Environment Setup
 
+The script will need your credentials, you can get them after creating an app [here](https://profile.intra.42.fr/oauth/applications/new).
+We assume that any recent version of node and package manager will be enough to move
+to the next steps. But we've specified the versions used in development in case of troubles.
+
 **Requirements**
-- Node
-- npm
+- Node (v15.13.0)
+- npm (v7.8.0)
+- Your Credentials
 
 ## Usage
 
@@ -43,11 +48,17 @@ git clone https://github.com/Robright20/usher.git
 ```sh
 cd usher
 ```
-3. Install dependecies
+3. Install dependencies
 ```sh
 npm i
 ```
-4. Run it !
+4. Save your credentials in a `.env` file
+```sh
+cat > .env
+UID=[your_uid]
+SECRET=[your_secret_key]
+```
+5. Run it !
 ```sh
 npm start
 ```
