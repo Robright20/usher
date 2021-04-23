@@ -15,12 +15,17 @@ The criteria that we used to define are very subjective, so be carefull if you t
 to use it in real life.
 
 - the moulinette grade is lower
+- the duration is less than 30 min
+- Does not compile
+- slotologie
 - the evaluated feedback on the evaluator
 - empty repository
 - forbidden function
 - norm error
 - author file
 - check the feedbacks comments(length, too short, generic or automatic. bad words)
+
+For more details about what is a bad evaluation [here](consepts.md)
 
 ## Latest Features
 
