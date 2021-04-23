@@ -25,7 +25,7 @@ to use it in real life.
 - author file
 - check the feedbacks comments(length, too short, generic or automatic. bad words)
 
-For more details about what is a bad evaluation [here](consepts.md)
+For more details about what is a bad evaluation, look [here](concepts.md)
 
 ## Latest Features
 
