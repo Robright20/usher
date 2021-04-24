@@ -1,4 +1,5 @@
 ## TODO
+**General**  
 - [x] add a dockerfile
 - [x] setup dockerfile
   - [x] define the base image
@@ -16,8 +17,9 @@
   - [ ] get data according to time interval
 - [ ] the duration
 - [ ] the corrector feedbacks
-- [ ] slotologie
-** Readme stuff
+- [ ] slotologie  
+
+**README stuff**  
 - [ ] add "look at the proposed features in issues"
 - [ ] add "we listed more specific tasks in the todo"
 - [ ] add MIT licence
