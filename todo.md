@@ -17,6 +17,11 @@
 - [ ] the duration
 - [ ] the corrector feedbacks
 - [ ] slotologie
+** Readme stuff
+- [ ] add "look at the proposed features in issues"
+- [ ] add "we listed more specific tasks in the todo"
 - [ ] add MIT licence
 - [ ] add acknowlgement to kygo
 - [ ] improve the authors references
+  - [ ] remove the (s) from the reference
+  - [ ] add social links
