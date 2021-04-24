@@ -24,8 +24,11 @@ Some solutions we provide:
 [TODO]
 
 ## The duration
-(less than 30min and the grade is > 0)
-[TODO]
+Every project have a minimal duration for the evaluations. Base on that, we can
+say that all corrections with a duration lower than that is bad. In other words,
+the corrector didn't spend enough time on it.
+When the evaluation stops earlier because of an error, we can check the flags or the
+comments.
 
 ## The Corrector feedbacks
 [TODO]
