@@ -1,4 +1,8 @@
 ## TODO
+- [x] add a dockerfile
+- [x] setup dockerfile
+  - [x] define the base image
+  - [x] install sqlite3
 - [ ] setup the database
 - [ ] save all the corrections since last 1 weeks
 - [ ] get the time interval from the user
