@@ -1,0 +1,11 @@
+## TODO
+- [ ] get the time interval
+- [ ] add MIT licence
+- [ ] add acknowlgement to kygo
+- [ ] improve the authors references
+- [ ] corrector vs correctors
+  - [ ] description
+  - [ ] get data according to time interval
+- [ ] the duration
+- [ ] the corrector feedbacks
+- [ ] slotologie
