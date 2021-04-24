@@ -31,14 +31,14 @@ Some solutions we provide:
 [TODO]
 
 ## The Correcteds feedbacks
-They rating and comments available in the corrected's feedbacks section may reveal
-bad corrections also.
+The rating and comments available in the corrected's feedbacks section may reveal
+bad corrections also.  
 **The rating**
-After every evaluation, student(the team leader) can rate the evaluation based on
-the interest, the behavior, the punctuality, rigor. And the rating will be from 0 to 4
-for each of those.
-We will therefore consider as bad evalution all the one with a corrected's feedback
-rating lower or equal to 2.
+After every evaluation, students(the team leader) can rate the evaluation based on
+the interest, the behavior, the punctuality and the rigor.
+And the rating will be from 0 to 4 for each of those.
+We will therefore consider as bad evalution all the ones with a corrected's feedback
+rating lower or equal to 2.  
 **The comments**
 As for the rating, the corrected students can evaluate their corrector using comments.
 And if they feel that the corrector did a bad evaluation, they may express it through
