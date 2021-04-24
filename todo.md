@@ -1,11 +1,18 @@
 ## TODO
-- [ ] get the time interval
-- [ ] add MIT licence
-- [ ] add acknowlgement to kygo
-- [ ] improve the authors references
+- [ ] setup the database
+- [ ] save all the corrections since last 1 weeks
+- [ ] get the time interval from the user
+  - [ ] last week
+  - [ ] last month
+  - [ ] last X day(s)
+  - [ ] last X week(s)
+  - [ ] last X month(s)
 - [ ] corrector vs correctors
   - [ ] description
   - [ ] get data according to time interval
 - [ ] the duration
 - [ ] the corrector feedbacks
 - [ ] slotologie
+- [ ] add MIT licence
+- [ ] add acknowlgement to kygo
+- [ ] improve the authors references
