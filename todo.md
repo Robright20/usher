@@ -5,25 +5,28 @@
   - [x] define the base image
   - [x] install sqlite3
 - [ ] setup the database
-- [ ] save all the corrections since last 1 weeks
+- [ ] get and save necessary data (available 1 weeks ago)
 - [ ] get the time interval from the user
   - [ ] last week
   - [ ] last month
   - [ ] last X day(s)
   - [ ] last X week(s)
   - [ ] last X month(s)
-- [ ] corrector vs correctors
-  - [ ] description
-  - [ ] get data according to time interval
-- [ ] the duration
-- [ ] the corrector feedbacks
+- [ ] detection based on the `duration`
+- [ ] ... the corrector feedbacks
+  - [ ] `final_mark`
+  - [ ] `comment`
+- [ ] ... the corrected feedbacks
+  - [ ] `feedback_rating`
+  - [ ] `feedback` (comment)
 - [ ] slotologie  
 
 **README stuff**  
-- [ ] add "look at the proposed features in issues"
-- [ ] add "we listed more specific tasks in the todo"
+- [ ] introduce comming features via issues
+- [ ] invitation to look at the todo.md
 - [ ] add MIT licence
 - [ ] add acknowlgement to kygo
 - [ ] improve the authors references
   - [ ] remove the (s) from the reference
   - [ ] add social links
+- [ ] Usage with Dockerfile

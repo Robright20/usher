@@ -62,3 +62,62 @@ had a bad evaluation.
 - norm error
 - author file
 - check the feedbacks comments(length, too short, generic or automatic. bad words)
+
+
+## New thoughts
+
+duration: 
+- compare with the defined duration
+	if lower, check the flags and/or the scale_team's final_mark,
+	or something else that shows it's because of an error
+
+corrector feedbacks:
+- final_mark:
+	
+
+final_mark insights:
+
+0		lower_bound		middle		upper_bound		max
+
+hater					neutral						family
+
+		enemy 							friend
+
+
+no_errors:
+	means, neither the flags nor the comments shows there
+	was an error(s).
+
+hater:
+- to fast with no_errors
+- comment with hate speech.
+- grade lower than the (mouli_grade + lower_bound)
+	with no_errors
+- grade lower than the (corrector_avr + lower_bound)
+	with no_errors
+- the behavior -> grade(1/2) and feedback
+- meaningless comment(too short or non-understandable)
+
+
+...
+
+**DB Structure**
+```
+
+scaleTeam
+_id, uid, scale_id, team_id, comment, feedback, final_mark,
+flag(details), begin_at, filled_at, corrector, feedback_rating
+
+projectUpload
+_id, uid, final_mark, comment
+
+scale
+_id, uid, duration, correction_number,
+
+flags
+_id, uid, scale_team_id, name, positive
+
+feedbacks
+_id, uid, rating, comment, nice, rigorous, interested, ponctual
+
+```
