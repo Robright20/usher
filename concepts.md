@@ -5,7 +5,19 @@ explain our ideas and how we are going to implent them.
 
 
 ## Moulinette vs Corrector
-[TODO]
+We think that a good evaluation should be closer to the one done by the moulinette if
+there is any.
+So we defined an `interval` with an `upper_bound/lower_bound`, where the middle is the
+final grade given by the moulinette.
+
+This hypothesis becomes tricky when the corrector finds a failure too earlier than
+the moulinette. In which case, the corrector's grade is lower than the `lower_bound`.
+Some solutions we provide:
+- We'll give the ability to redefined the boundaries
+- We return the comments to let the user decide based on that.
+- We plan to use the NPL to check if a good reason is mention in the comments.
+- We will base the final decision on the other corrector's grade.
+
 
 ## Corrector vs Correctors
 [TODO]
@@ -18,7 +30,7 @@ explain our ideas and how we are going to implent them.
 [TODO]
 
 ## Slotologie
-(check the freequencie at which two students correct each other)
+(check the frequency at which two students correct each other)
 
 - the moulinette grade is lower
 - the duration is less than 30 min
