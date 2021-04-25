@@ -4,7 +4,7 @@
 - [x] setup dockerfile
   - [x] define the base image
   - [x] install sqlite3
-- [ ] setup the database
+- [x] setup the database
 - [ ] get and save necessary data (available 1 weeks ago)
 - [ ] get the time interval from the user
   - [ ] last week
