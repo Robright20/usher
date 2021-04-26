@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Robright20/usher#readme",
   "dependencies": {
+    "await-to-js": "^3.0.0",
     "client-oauth2": "^4.3.3",
     "dotenv": "^8.2.0",
     "sqlite3": "^5.0.2"
