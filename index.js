@@ -9,7 +9,8 @@ const {
   Feedback,
   ScaleTeam,
   Scale,
-  Flag
+  Flag,
+  fetch
 } = require("./helpers");
 
 const db = new sqlite3.Database(process.env.DB, (err) => {
@@ -20,6 +21,7 @@ const oa = new OAuth2(config);
 
 (async function main() {
   let [err, token] = await to(oa.credentials.getToken());
+  let res;
   if (err)
     return console.log("Connection failed!");
   // init database
@@ -27,33 +29,45 @@ const oa = new OAuth2(config);
     const dbSchema = fs.readFileSync(process.env.DB_SCHEMA, "utf-8");
     db.exec(dbSchema);
   });
+  const dt_range = `range[created_at]=${'1 week'.ago()},${new Date().toISOString()}`;
+  const mark_range = `range[final_mark]=0,300`;
+  const page_size = 100;
+  let page_range, path;
+  let page_number = 1;
+  let scale_teams = [];
+  let body = {};
 
-// const [err, res] = await to(fetch("/v2/scale_teams/page?number=1&pa", token))
-  // console.log("1 day".ago());
-  const scale_teams = JSON.parse(fs.readFileSync("./db/usher.json", "utf-8"));
-  // // const scale_teams = JSON.parse(res.body);
-  // // fs.writeFileSync("./db/usher.json", res.body);
-  let feedbacks = [];
-  let upload = {};
-  // let res;
-  // // let project_upload;
-  for (let elm of scale_teams) {
-    new ScaleTeam(elm).save(db);
-    new Scale(elm).save(db);
-    elm.scale.flags
-      .filter(flag => flag.positive === true)
-      .forEach(flag => new Flag({
-        ...flag, id: elm.id
-        }).save(db)
-      );
-    feedbacks = await Feedback.fetchByScaleTeams(elm.id, token);
-    for (let feedback of feedbacks) {
-      await Feedback.create(feedback, elm.id, db);
-    }
-    [upload] = await Upload.fetchByScaleTeams(elm.id, token);
-    await Upload.create(upload, elm.id, db);
+  while (page_number < 20) {
+    page_range = `page[number]=${page_number}&page[size]=${page_size}`;
+    path = `/v2/scale_teams/?${dt_range}&${page_range}&${mark_range}`;
+
+    [err, res] = await to(fetch(path, token));
+    // fs.writeFileSync("./db/usher.json", res.body);
+    [body] = JSON.parse(res.body);
+    scale_teams.push(body);
+    page_number += 1;
+    console.log(scale_teams.length);
   }
+  fs.writeFileSync("./db/usher.json", JSON.stringify(scale_teams));
+  // scale_teams = JSON.parse(fs.readFileSync("./db/usher.json", "utf-8"));
+  // const scale_teams = JSON.parse(res.body);
+  // let feedbacks = [];
+  // let upload = {};
+  // for (let elm of scale_teams) {
+  //   new ScaleTeam(elm).save(db);
+  //   new Scale(elm).save(db);
+  //   elm.scale.flags
+  //     .filter(flag => flag.positive === true)
+  //     .forEach(flag => new Flag({
+  //       ...flag, id: elm.id
+  //       }).save(db)
+  //     );
+  //   feedbacks = await Feedback.fetchByScaleTeams(elm.id, token);
+  //   for (let feedback of feedbacks) {
+  //     await Feedback.create(feedback, elm.id, db);
+  //   }
+  //   [upload] = await Upload.fetchByScaleTeams(elm.id, token);
+  //   await Upload.create(upload, elm.id, db);
+  // }
   db.close();
-  // fetch("/v2/users/fokrober", token)
-  // 	.then((res) => console.log(res));
 })();

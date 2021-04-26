@@ -48,7 +48,7 @@ String.prototype['ago'] = function() {
   if (elaptime) {
     elapdate = new Date(Date.now() - elaptime);
   }
-  return elapdate;
+  return elapdate.toISOString();
 }
 
 String.prototype['elaptime_to'] = function(fin) {
@@ -203,7 +203,6 @@ Upload.fetchByScaleTeams = async function(scale_team_id, token) {
 }
 
 Upload.create = async function(upload, scale_team_id, db) {
-  console.log(upload);
   if (!upload)
     return ;
   db.run(`INSERT INTO project_uploads
@@ -222,5 +221,6 @@ module.exports = {
   Feedback,
   ScaleTeam,
   Scale,
-  Flag
+  Flag,
+  fetch
 };
