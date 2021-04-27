@@ -1,6 +1,6 @@
 # Bad evaluations
 
-Looking for Bad evaluations it's a very complex topic, and here we will
+Looking for Bad evaluations it's a very complex topic, and here we will  
 explain our ideas and how we are going to implent them.
 
 ## What's an evaluation ? 
@@ -11,18 +11,17 @@ submission(`feedback`).
 
 ## How it works ?
 
-We use the evaluation object explained before and the criteria below, to gather
-bad evaluatuations in two main categories: `correction` and `feedback`.
+We use the evaluation object explained before and the criteria below,  
+to gather bad evaluatuations in two main categories: `correction` and `feedback`.
 - the moulinette
 - the duration
 - slotologie
-- a moulinette-like bot*(for some projects only)*
+- a moulinette-like bot(*for some projects only*)
 - correctors average grade
 - the comments
 
-The evaluation falling in bad `correction` shows that the blame is on the
-corrector side. And for the bad `feedback`, it can be on the evaluated,
-corrector or both of them.
+The evaluation falling in bad `correction` shows that the blame is on the corrector side.  
+And for the bad `feedback`, it can be on the evaluated, corrector or both of them.
 
 The following, explains how we use each attribute of the evaluation object.
 
@@ -49,19 +48,19 @@ Lets illustrate this with the main assumption:
 2. The corrector used an upper grade with no reason(`family`)  
 
 hater:  
-- lower grade with `no_errors`. criteria used:
+- lower grade with `no_errors`. criteria used:  
 moulinette-like bot, correctors average, duration, comments.  
 
 familly:  
-- higher grade `with_errors`. criteria used:
+- higher grade `with_errors`. criteria used:  
 moulinette-like bot, correctors average, duration, comments.  
 
 The following shows, insights that we can get from other evaluation attribute.
 
 **feedback_rating:**
-- bad evaluation
+- bad feedback
 - bad correction
-- both.
+- both(i.e bad evaluation)
 
 **correction_comment:**
 - error found(flag, explain)
