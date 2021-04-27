@@ -14,12 +14,13 @@ String.prototype['time_to'] = function (dst) {
   src = src.trim();
 
   const locales = {
-    "week": [1, 7, "day"],
-    "day": [2, 24, "hour", 7, "week"],
-    "hour": [3, 60, "min", 24, 'day'],
-    "min": [4, 60, "sec", 60, 'hour'],
-    "sec": [5, 1000, "ms", 60, 'min'],
-    "ms": [6, 1,, 1000, 'sec']
+    "month": [7, 4, "week"],
+    "week": [6, 7, "day", 4, "month"],
+    "day": [5, 24, "hour", 7, "week"],
+    "hour": [4, 60, "min", 24, 'day'],
+    "min": [3, 60, "sec", 60, 'hour'],
+    "sec": [2, 1000, "ms", 60, 'min'],
+    "ms": [1, 1,, 1000, 'sec']
   }
     
   let result = x;
@@ -27,12 +28,12 @@ String.prototype['time_to'] = function (dst) {
 
   if (!locales[src] || !locales[dst])
     return ; // maybe throw an error
-  if (locales[src][0] > locales[dst][0]) {
+  if (locales[src][0] < locales[dst][0]) {
       while (tmp && tmp != dst) {
         result /= locales[tmp][3];
           tmp = locales[tmp][4]
       }
-  } else if (locales[src][0] < locales[dst][0]) {
+  } else if (locales[src][0] > locales[dst][0]) {
       while (tmp && tmp != dst) {
         result *= locales[tmp][1];
           tmp = locales[tmp][2]

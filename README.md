@@ -24,6 +24,7 @@ in two main categories(`correction` and `feedback`).
 - slotologie
 - a moulinette-like bot*(for some projects only)*
 - correctors average grade
+- the comments
 
 The evaluation falling in bad `correction` shows that the blame is on the
 corrector side. And for the bad `feedback`, it can be on the evaluated,

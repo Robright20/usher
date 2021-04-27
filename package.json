@@ -27,6 +27,7 @@
     "await-to-js": "^3.0.0",
     "client-oauth2": "^4.3.3",
     "dotenv": "^8.2.0",
+    "prompts": "^2.4.1",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
