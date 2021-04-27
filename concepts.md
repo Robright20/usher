@@ -56,20 +56,20 @@ familly:
 - higher grade `with_errors`. criteria used:
 moulinette-like bot, correctors average, duration, comments.  
 
-**Insights that we can get from other evaluation attribute.**   
+The following shows, insights that we can get from other evaluation attribute.
 
-**feedback_rating:**  
+**feedback_rating:**
 - bad evaluation
 - bad correction
 - both.
 
-**correction_comment:**  
+**correction_comment:**
 - error found(flag, explain)
 - everything OK
 - hate speech
 - meaningless
 
-**feedback_comment:**  
+**feedback_comment:**
 - error found(flag, explain)
 - everything OK
 - hate speech
