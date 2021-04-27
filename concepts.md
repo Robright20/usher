@@ -3,102 +3,77 @@
 Looking for Bad evaluations it's a very complex topic, and here we will
 explain our ideas and how we are going to implent them.
 
+## What's an evaluation ? 
+We define an evaluation as a data object which looks like:
+- `{final_mark: number, comment: text}` when it represent the `corrector`'s submission(we'll call it `correction`).
+- `{rating: number, comment: text}` representing the `corrected`'s
+submission(`feedback`).
 
-## Moulinette vs Corrector
-We think that a good evaluation should be closer to the one done by the moulinette if
-there is any.
-So we defined an `interval` with an `upper_bound/lower_bound`, where the middle is the
-final grade given by the moulinette. And if a Corrector's grade is outside
-the boundaries we assume it's a bad correction.
+## How it works ?
 
-This hypothesis becomes tricky when the corrector finds a failure too earlier than
-the moulinette. In which case, the corrector's grade is lower than the `lower_bound`.
-Some solutions we provide:
-- We'll give the ability to redefined the boundaries
-- We return the comments to let the user decide based on that.
-- We plan to use the NPL to check if a good reason is mention in the comments.
-- We will base the final decision on the other corrector's grade.
-
-
-## Corrector vs Correctors
-[TODO]
-
-## The duration
-Every project have a minimal duration for the evaluations. Base on that, we can
-say that all corrections with a duration lower than that is bad. In other words,
-the corrector didn't spend enough time on it.
-When the evaluation stops earlier because of an error, we can check the flags or the
-comments.
-
-## The Corrector feedbacks
-[TODO]
-
-## The Correcteds feedbacks
-The rating and comments available in the corrected's feedbacks section may reveal
-bad corrections also.  
-**The rating**  
-After every evaluation, students(the team leader) can rate the evaluation based on
-the interest, the behavior, the punctuality and the rigor.
-And the rating will be from 0 to 4 for each of those.
-We will therefore consider as bad evalution all the ones with a corrected's feedback
-rating lower or equal to 2.  
-**The comments**  
-As for the rating, the corrected students can evaluate their corrector using comments.
-And if they feel that the corrector did a bad evaluation, they may express it through
-the comments.
-With can then use NPL to analyse comments and detect the ones that says the students
-had a bad evaluation.
-
-## Slotologie
-(check the frequency at which two students correct each other)
-
-- the moulinette grade is lower
-- the duration is less than 30 min
-- Does not compile
+We use the evaluation object explained before and the criteria below, to gather
+bad evaluatuations in two main categories: `correction` and `feedback`.
+- the moulinette
+- the duration
 - slotologie
-- the evaluated feedback on the evaluator
-- empty repository
-- forbidden function
-- norm error
-- author file
-- check the feedbacks comments(length, too short, generic or automatic. bad words)
+- a moulinette-like bot*(for some projects only)*
+- correctors average grade
+- the comments
 
+The evaluation falling in bad `correction` shows that the blame is on the
+corrector side. And for the bad `feedback`, it can be on the evaluated,
+corrector or both of them.
 
-## New thoughts
+The following, explains how we use each attribute of the evaluation object.
 
-duration: 
-- compare with the defined duration
-	if lower, check the flags and/or the scale_team's final_mark,
-	or something else that shows it's because of an error
+**Correction's final_mark:**  
+Based to the table below, we assign a label to `final_mark`. This represent
+our assumption on the evaluation.  
+| 0     | lower_bound | middle | upper_bound | 125    |
+|-------|-------------|--------|-------------|--------|
+| hater |        |      neutral     |        | family |
+|       | enemy  |                  | friend |        |
 
-corrector feedbacks:
-- final_mark:
-	
-```
-final_mark insights:
+Notes:  
+- `lower_bound` and `upper_bound` will be either a default value or
+provided by the user.  
+- `middle`: the moulinette, custom moulinette-like bot, correctors average
+`final_grade`.  
+- `no_errors` (*used later*): means, neither the flags nor the comments shows
+there was an error(s).  
 
-0		lower_bound		middle		upper_bound		max
+After the labeling Phase, we have to verify the related assumption. This is
+done by using the criteria mentionned previously.  
+Lets illustrate this with the main assumption:  
+1. The corrector used a lower grade with no reason(`hater`)  
+2. The corrector used an upper grade with no reason(`family`)  
 
-hater					neutral						family
+hater:  
+- lower grade with `no_errors`. criteria used:
+moulinette-like bot, correctors average, duration, comments.  
 
-		enemy 							friend
- n
-```
-`no_errors`:
-	means, neither the flags nor the comments shows there
-	was an error(s).
+familly:  
+- higher grade `with_errors`. criteria used:
+moulinette-like bot, correctors average, duration, comments.  
 
-hater:
-- to fast with `no_errors`
-- comment with hate speech.
-- grade lower than the (mouli_grade + lower_bound)
-	with `no_errors`
-- grade lower than the (corrector_avr + lower_bound)
-	with `no_errors`
-- the behavior -> grade(1/2) and feedback
-- meaningless comment(too short or non-understandable)
+**Insights that we can get from other evaluation attribute.**   
 
-...
+**feedback_rating:**  
+- bad evaluation
+- bad correction
+- both.
+
+**correction_comment:**  
+- error found(flag, explain)
+- everything OK
+- hate speech
+- meaningless
+
+**feedback_comment:**  
+- error found(flag, explain)
+- everything OK
+- hate speech
+- meaningless  
 
 **DB Structure**
 ```
