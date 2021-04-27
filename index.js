@@ -81,23 +81,23 @@ const oa = new OAuth2(config);
   });
   const dt_range = `range[filled_at]=${answers.period.ago()},${new Date().toISOString()}`;
   const mark_range = `range[final_mark]=0,125`;
-  const page_size = 100;
+  const page_size = 2;
   let page_range, path;
-  let page_number = 1;
+  let page_number = 0;
   let scale_teams = [];
   let scale_team;
   let feedbacks = [];
   let upload = {};
 
-  while (page_number < 5) {
+  while (page_number < answers.page_number) {
+    page_number += 1;
     page_range = `page[number]=${page_number}&page[size]=${page_size}`;
     path = `/v2/scale_teams/?${dt_range}&${mark_range}&${page_range}`;
 
     [err, res] = await to(fetch(path, token));
-    console.log(err, res.body);
     scale_teams = JSON.parse(res.body);
     for (let elm of scale_teams) {
-      scale_team = new ScaleTeam(elm).save(db);
+      scale_team = await new ScaleTeam(elm).save(db);
       new Scale(elm).save(db);
       elm.scale.flags
         .filter(flag => flag.positive === true)
@@ -114,15 +114,13 @@ const oa = new OAuth2(config);
             details: 'rating',
             created_at: feedback.created_at,
           }, elm.id, db);
-          console.log('->');
-          await scale_teams.saveUsers(db);
+          await scale_team.saveUsers(db);
         }
       }
       [upload] = await Upload.fetchByScaleTeams(elm.id, token) ?? [];
       await Upload.create(upload, elm.id, db);
     }
     console.log(`page: ${page_number} length: ${scale_teams.length}`);
-    page_number += 1;
   }
   db.close();
 })()

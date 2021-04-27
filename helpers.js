@@ -133,8 +133,10 @@ function ScaleTeam(props) {
   this.comment = props.comment;
   this.created_at = props.created_at;
   this.updated_at = props.updated_at;
+  this.begin_at = props.begin_at;
   this.duration = props.created_at.elaptime_to(props.begin_at);
   this.corrector = props.corrector.login;
+  this.correcteds = props.correcteds;
 }
 
 ScaleTeam.prototype.save = async function (db) {
@@ -252,7 +254,7 @@ BadEval.create = async function(evaluation, scale_team_id, db) {
   return new this(evaluation, scale_team_id);
 }
 
-BadEval.byFeedback = (feedback) => feedback.rating <= 3;
+BadEval.byFeedback = (feedback) => feedback.rating <= 5;
 
 function Participant(props) {
   this.scale_team_id = props.scale_team_id;
@@ -268,7 +270,7 @@ Participant.prototype.save = async function(db) {
       this.position,
       ], handleError
   );
-  return new this(participant, scale_team_id);
+  return this;
 }
 
 Participant.create = async function(participant, db) {
@@ -286,8 +288,9 @@ Participant.create = async function(participant, db) {
 
 ScaleTeam.prototype.saveUsers = async function(db) {
   const {corrector, correcteds} = this;
+  console.log(`begin_at: ${this.begin_at} corrector: [${corrector}] correcteds: [${correcteds.map(v => v.login)}]`);
   await new Participant({
-    login: corrector.login,
+    login: corrector,
     scale_team_id: this.id,
     position: 'corrector'
   }).save(db);
@@ -299,7 +302,6 @@ ScaleTeam.prototype.saveUsers = async function(db) {
       position: 'corrected'
     }).save(db);
   }
-  console.log(`begin_at: ${this.begin_at} corrector: ${corrector.login} correcteds:${correcteds.map(v => v.login)}`);
 }
 
 module.exports = {
