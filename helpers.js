@@ -254,23 +254,52 @@ BadEval.create = async function(evaluation, scale_team_id, db) {
 
 BadEval.byFeedback = (feedback) => feedback.rating <= 3;
 
-function Participant(props, scale_team_id) {
-  this.scale_team_id = scale_team_id;
+function Participant(props) {
+  this.scale_team_id = props.scale_team_id;
   this.login = props.login;
   this.position = props.position;
 }
 
-Participant.create = async function(participant, scale_team_id, db) {
+Participant.prototype.save = async function(db) {
+  db.run(`INSERT INTO participants (scale_team_id, login, position)
+    VALUES(?, ?, ?)`, [
+      this.scale_team_id,
+      this.login,
+      this.position,
+      ], handleError
+  );
+  return new this(participant, scale_team_id);
+}
+
+Participant.create = async function(participant, db) {
   if (!participant)
     return ;
   db.run(`INSERT INTO participants (scale_team_id, login, position)
     VALUES(?, ?, ?)`, [
-      scale_team_id,
+      participant.scale_team_id,
       participant.login,
       participant.position,
       ], handleError
   );
   return new this(participant, scale_team_id);
+}
+
+ScaleTeam.prototype.saveUsers = async function(db) {
+  const {corrector, correcteds} = this;
+  await new Participant({
+    login: corrector.login,
+    scale_team_id: this.id,
+    position: 'corrector'
+  }).save(db);
+
+  for (user of correcteds) {
+    await new Participant({
+      login: user.login,
+      scale_team_id: this.id,
+      position: 'corrected'
+    }).save(db);
+  }
+  console.log(`begin_at: ${this.begin_at} corrector: ${corrector.login} correcteds:${correcteds.map(v => v.login)}`);
 }
 
 module.exports = {
@@ -280,5 +309,6 @@ module.exports = {
   Scale,
   Flag,
   fetch,
-  BadEval
+  BadEval,
+  Participant
 };

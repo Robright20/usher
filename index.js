@@ -12,7 +12,8 @@ const {
   Scale,
   Flag,
   fetch,
-  BadEval
+  BadEval,
+  Participant
 } = require("./helpers");
 
 const questions = [
@@ -40,7 +41,7 @@ const questions = [
   {
     type: 'number',
     name: 'moulinette',
-    message: 'Enter moulinette left_bound :',
+    message: 'Enter moulinette left bound :',
     initial: '20',
     format: val => ({left:val})
   },
@@ -51,6 +52,13 @@ const questions = [
     initial: '20, 20',
     separator: ',',
     format: val => ({left: val[0], right: val[1]})
+  },
+  {
+    type: 'number',
+    name: 'page_number',
+    message: "Max page per request: (100 evaluations/page)",
+    initial: '2',
+    min: 1
   }
 ];
 
@@ -77,19 +85,19 @@ const oa = new OAuth2(config);
   let page_range, path;
   let page_number = 1;
   let scale_teams = [];
+  let scale_team;
   let feedbacks = [];
   let upload = {};
 
-  while (page_number < 2) {
+  while (page_number < 5) {
     page_range = `page[number]=${page_number}&page[size]=${page_size}`;
     path = `/v2/scale_teams/?${dt_range}&${mark_range}&${page_range}`;
 
-    console.log(`page: ${page_number}`);
     [err, res] = await to(fetch(path, token));
-    // fs.writeFileSync("./db/usher.json", res.body);
+    console.log(err, res.body);
     scale_teams = JSON.parse(res.body);
     for (let elm of scale_teams) {
-      new ScaleTeam(elm).save(db);
+      scale_team = new ScaleTeam(elm).save(db);
       new Scale(elm).save(db);
       elm.scale.flags
         .filter(flag => flag.positive === true)
@@ -106,12 +114,16 @@ const oa = new OAuth2(config);
             details: 'rating',
             created_at: feedback.created_at,
           }, elm.id, db);
+          console.log('->');
+          await scale_teams.saveUsers(db);
         }
       }
       [upload] = await Upload.fetchByScaleTeams(elm.id, token) ?? [];
       await Upload.create(upload, elm.id, db);
     }
+    console.log(`page: ${page_number} length: ${scale_teams.length}`);
     page_number += 1;
   }
   db.close();
-})();
+})()
+.catch((err) => console.log(err.message));
