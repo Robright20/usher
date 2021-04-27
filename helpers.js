@@ -94,6 +94,16 @@ const fetchBy = async (path, token) => {
   return JSON.parse(res.body);
 };
 
+const handleError = (err) => {
+  if (!err || err.code === 'SQLITE_CONSTRAINT')
+    return ;
+  console.log(err.message);
+  // console.log("Constructor: ", err.constructor);
+  // console.log("message: ", err.message);
+  // console.log("code: ", err.code);
+  // console.log("name: ", err.name);
+}
+
 /*
 * @Data helpers
 *
@@ -110,7 +120,7 @@ Scale.prototype.save = async function (db) {
       this.scale_id,
       this.duration,
       this.correction_number
-  ], (err) => {});
+  ], handleError);
   return (this);
 }
 
@@ -138,7 +148,7 @@ ScaleTeam.prototype.save = async function (db) {
     this.corrector,
     this.created_at,
     this.updated_at
-    ], (err) => {}
+    ], handleError
   );
   return (this);
 }
@@ -155,7 +165,7 @@ Flag.prototype.save = async function(db) {
       this.scale_team_id,
       this.name,
       this.positive
-    ], (err) => {}
+    ], handleError
   );
   return (this);
 }
@@ -185,7 +195,7 @@ Feedback.create = async function(feedback, scale_team_id, db) {
       feedback.rating,
       feedback.comment,
       ...details
-  ], (err) => {});
+  ], handleError);
   return new this(scale_team_id, feedback);
 }
 
@@ -197,9 +207,13 @@ function Upload(upload) {
 
 Upload.fetchByScaleTeams = async function(scale_team_id, token) {
   const path = `/v2/teams/${scale_team_id}/teams_uploads`;
-  const [err, upload] = await to(fetchBy(path, token));
+  let [err, upload] = await to(fetchBy(path, token));
 
-  return upload ?? [];
+  if (err || !(upload instanceof Array)) {
+    //console.log("Failed to fetch teams uploads!");
+    upload = [];
+  }
+  return upload;
 }
 
 Upload.create = async function(upload, scale_team_id, db) {
@@ -211,9 +225,51 @@ Upload.create = async function(upload, scale_team_id, db) {
       scale_team_id,
       upload.final_mark,
       upload.comment,
-      ], (err) => {}
+      ], handleError
   );
   return new this(scale_team_id, upload);
+}
+
+function BadEval(evaluation, scale_team_id) {
+  this.scale_team_id = scale_team_id;
+  this.reason = evaluation.reason;
+  this.details = evaluation.details;
+  this.created_at = evaluation.created_at;
+}
+
+BadEval.create = async function(evaluation, scale_team_id, db) {
+  if (!evaluation)
+    return ;
+  db.run(`INSERT INTO bad_evaluations
+    (scale_team_id, reason, details, created_at) VALUES(?, ?, ?, ?)`, [
+      scale_team_id,
+      evaluation.reason,
+      evaluation.details,
+      evaluation.created_at
+      ], handleError
+  );
+  return new this(evaluation, scale_team_id);
+}
+
+BadEval.byFeedback = (feedback) => feedback.rating <= 3;
+
+function Participant(props, scale_team_id) {
+  this.scale_team_id = scale_team_id;
+  this.login = props.login;
+  this.position = props.position;
+}
+
+Participant.create = async function(participant, scale_team_id, db) {
+  if (!participant)
+    return ;
+  db.run(`INSERT INTO participants (scale_team_id, login, position)
+    VALUES(?, ?, ?)`, [
+      scale_team_id,
+      participant.login,
+      participant.position,
+      ], handleError
+  );
+  return new this(participant, scale_team_id);
 }
 
 module.exports = {
@@ -222,5 +278,6 @@ module.exports = {
   ScaleTeam,
   Scale,
   Flag,
-  fetch
+  fetch,
+  BadEval
 };

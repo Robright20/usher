@@ -46,3 +46,18 @@ CREATE TABLE IF NOT EXISTS feedbacks (
     FOREIGN KEY (scale_team_id) REFERENCES scale_teams (scale_team_id)
         ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+CREATE TABLE IF NOT EXISTS bad_evaluations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    scale_team_id INTEGER NOT NULL,
+    reason NVARCHAR(20),
+    details TEXT,
+    created_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS participants (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    scale_team_id INTEGER NOT NULL,
+    login NVARCHAR(20),
+    position TEXT
+);

@@ -10,27 +10,33 @@ students who have done "bad evaluations" during that time.
 As a result, you will have the `evaluation date` and the `logins of participants`.
 
 ## Bad evaluations ?
+**What's an evaluation ?**  
+We define an evaluation as a data object which looks like:
+- `{final_mark: number, comment: text}` when it represent the `corrector`'s submission.
+- `{rating: number, comment: text}` representing the `corrected`'s submission.
 
-The criteria that we used to define are very subjective, so be carefull if you try
-to use it in real life.
+**How it works ?**
 
-- the moulinette grade is lower
-- the duration is less than 30 min
-- Does not compile
+With the evaluation object and the criteria below, we group bad corrections
+in two main categories(`correction` and `feedback`).
+- the moulinette
+- the duration
 - slotologie
-- the evaluated feedback on the evaluator
-- empty repository
-- forbidden function
-- norm error
-- author file
-- check the feedbacks comments(length, too short, generic or automatic. bad words)
+- a moulinette-like bot*(for some projects only)*
+- correctors average grade
+
+The evaluation falling in bad `correction` shows that the blame is on the
+corrector side. And for the bad `feedback`, it can be on the evaluated,
+corrector or both of them.
+
+So we's be looking for *bad correctors* and *bad correcteds* :-D.
 
 For more details about what is a bad evaluation, look [here](concepts.md)
 
 ## Latest Features
 
 Here are the latest stuff that the tool is able to do
-- Get my profiles data from the api
+- retrieve all bad evaluations since the last week
 
 ## Environment Setup
 

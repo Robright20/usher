@@ -82,7 +82,7 @@ final_mark insights:
 hater					neutral						family
 
 		enemy 							friend
-
+ n
 ```
 `no_errors`:
 	means, neither the flags nor the comments shows there
@@ -97,7 +97,6 @@ hater:
 	with `no_errors`
 - the behavior -> grade(1/2) and feedback
 - meaningless comment(too short or non-understandable)
-
 
 ...
 
