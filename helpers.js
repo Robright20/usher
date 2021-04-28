@@ -189,7 +189,7 @@ Feedback.fetchByScaleTeams = async function(scale_team_id, token) {
 }
 
 Feedback.create = async function(feedback, scale_team_id, db) {
-  const details = feedback.feedback_details.map((v) => v.rate);
+  const details = feedback.feedback_details?.map((v) => v.rate) ?? [];
 
   db.run(`INSERT INTO feedbacks
     VALUES(${'?,'.repeat(8).slice(0, -1)})`, [
@@ -254,7 +254,7 @@ BadEval.create = async function(evaluation, scale_team_id, db) {
   return new this(evaluation, scale_team_id);
 }
 
-BadEval.byFeedback = (feedback) => feedback.rating <= 5;
+BadEval.byFeedback = (feedback) => feedback.rating <= 3;
 
 function Participant(props) {
   this.scale_team_id = props.scale_team_id;

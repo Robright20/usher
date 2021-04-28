@@ -81,7 +81,7 @@ const oa = new OAuth2(config);
   });
   const dt_range = `range[filled_at]=${answers.period.ago()},${new Date().toISOString()}`;
   const mark_range = `range[final_mark]=0,125`;
-  const page_size = 2;
+  const page_size = 100;
   let page_range, path;
   let page_number = 0;
   let scale_teams = [];
@@ -105,7 +105,9 @@ const oa = new OAuth2(config);
           ...flag, id: elm.id
           }).save(db)
         );
-      feedbacks = await Feedback.fetchByScaleTeams(elm.id, token);
+      feedbacks = elm.feedbacks;
+      // console.log(elm);
+      // feedbacks = await Feedback.fetchByScaleTeams(elm.id, token);
       for (let feedback of feedbacks) {
         await Feedback.create(feedback, elm.id, db);
         if (BadEval.byFeedback(feedback)) {
@@ -117,8 +119,8 @@ const oa = new OAuth2(config);
           await scale_team.saveUsers(db);
         }
       }
-      [upload] = await Upload.fetchByScaleTeams(elm.id, token) ?? [];
-      await Upload.create(upload, elm.id, db);
+      // [upload] = await Upload.fetchByScaleTeams(elm.id, token) ?? [];
+      // await Upload.create(upload, elm.id, db);
     }
     console.log(`page: ${page_number} length: ${scale_teams.length}`);
   }
